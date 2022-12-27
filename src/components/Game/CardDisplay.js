@@ -3,13 +3,14 @@ import { useState } from "react";
 
 export default function CardDisplay() {
   const [cardsArray, setCardsArray] = useState(Cards);
+  const [cardsClicked, setCardsClicked] = useState(0);
 
   function shuffleCards(cards, cardId) {
+    // check if card was clicked before or not
     const cardToCheck = cardsArray.find((card) => card.id === cardId);
     if (cardToCheck.clicked) {
-      console.log("you lose!");
+      gameEnd("loss");
     } else {
-      console.log("you live this time...");
       // update card clicked boolean
       const newState = cardsArray.map((card) => {
         if (card.id === cardId) {
@@ -18,6 +19,12 @@ export default function CardDisplay() {
         return card;
       });
       setCardsArray(newState);
+      setCardsClicked((prevState) => prevState + 1);
+    }
+
+    // check if game won
+    if (cardsClicked === cardsArray.length) {
+      gameEnd("win");
     }
   }
 
@@ -26,6 +33,15 @@ export default function CardDisplay() {
       .map((value) => ({ value, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
       .map(({ value }) => value);
+  }
+
+  function gameEnd(winLoss) {
+    if (winLoss === "win") {
+      console.log("congrats, you won");
+    } else if (winLoss === "loss") {
+      console.log("you lose");
+    }
+    // TODO: disable clicking
   }
 
   return (
