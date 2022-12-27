@@ -19,7 +19,7 @@ export default function CardDisplay() {
           className='card'
           onClick={() => setCardsArray(randomize(Cards))}
         >
-          {card.content}
+          <span>{card.content}</span>
         </div>
       ))}
     </div>

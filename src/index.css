@@ -9,4 +9,11 @@
     padding: 10px;
     margin: 5px;
     cursor: pointer;
+    flex-basis: 50px;
+    
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
