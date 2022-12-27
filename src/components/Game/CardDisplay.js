@@ -1,5 +1,5 @@
 import { Cards } from "./Cards";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function CardDisplay() {
   const [cardsArray, setCardsArray] = useState(Cards);
@@ -21,12 +21,14 @@ export default function CardDisplay() {
       setCardsArray(newState);
       setCardsClicked((prevState) => prevState + 1);
     }
+  }
 
-    // check if game won
+  // check if won game
+  useEffect(() => {
     if (cardsClicked === cardsArray.length) {
       gameEnd("win");
     }
-  }
+  }, [cardsClicked]);
 
   function randomize(array) {
     return array
