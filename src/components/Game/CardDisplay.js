@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 export default function CardDisplay() {
   const [cardsArray, setCardsArray] = useState(Cards);
   const [cardsClicked, setCardsClicked] = useState(0);
+  const [gameStatus, setGameStatus] = useState("active");
 
-  function shuffleCards(cards, cardId) {
+  function shuffleCards(cardId) {
     // check if card was clicked before or not
     const cardToCheck = cardsArray.find((card) => card.id === cardId);
     if (cardToCheck.clicked) {
@@ -39,24 +40,24 @@ export default function CardDisplay() {
 
   function gameEnd(winLoss) {
     if (winLoss === "win") {
-      console.log("congrats, you won");
+      setGameStatus("won");
     } else if (winLoss === "loss") {
-      console.log("you lose");
+      setGameStatus("lost");
     }
-    // TODO: disable clicking
   }
 
   return (
     <div className='card-display'>
-      {randomize(cardsArray).map((card) => (
-        <div
-          key={card.id}
-          className='card'
-          onClick={() => shuffleCards(Cards, card.id)}
-        >
-          <span>{card.content}</span>
-        </div>
-      ))}
+      {(gameStatus === "active" &&
+        randomize(cardsArray).map((card) => (
+          <div
+            key={card.id}
+            className='card'
+            onClick={() => shuffleCards(card.id)}
+          >
+            <span>{card.content}</span>
+          </div>
+        ))) || <div>You {gameStatus}!</div>}
     </div>
   );
 }
