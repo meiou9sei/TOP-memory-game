@@ -1,0 +1,12 @@
+.card-display {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.card {
+    background-color: lightblue;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+}

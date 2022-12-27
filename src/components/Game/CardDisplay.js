@@ -2,9 +2,11 @@ import { Cards } from "./Cards";
 
 export default function CardDisplay() {
   return (
-    <div>
+    <div className='card-display'>
       {Cards.map((card) => (
-        <div key={card.id}>{card.content}</div>
+        <div key={card.id} className='card'>
+          {card.content}
+        </div>
       ))}
     </div>
   );
