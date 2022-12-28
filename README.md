@@ -1,4 +1,4 @@
-live demo: (to be linked)
+live demo: http://meiou9sei.github.io/TOP-memory-game
 
 memory game as part of TOP curriculum
 
