@@ -2,13 +2,19 @@ import Scoreboard from "./Scoreboard";
 import useGameLogic from "./useGameLogic";
 
 export default function Game() {
-  const { cardsArray, gameStatus, randomize, shuffleCards, newGame } =
-    useGameLogic();
+  const {
+    cardsArray,
+    cardsClicked,
+    gameStatus,
+    randomize,
+    shuffleCards,
+    newGame,
+  } = useGameLogic();
 
   return (
     <div className='game'>
       <div className='scoreboard'>
-        <Scoreboard />
+        <Scoreboard score={cardsClicked} />
       </div>
       <div className='card-display'>
         {(gameStatus === "active" &&

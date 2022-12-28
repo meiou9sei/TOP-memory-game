@@ -54,6 +54,7 @@ const useGameLogic = () => {
 
   return {
     cardsArray,
+    cardsClicked,
     gameStatus,
     randomize,
     shuffleCards,
