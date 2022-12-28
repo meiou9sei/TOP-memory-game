@@ -7,6 +7,10 @@ function App() {
     <div className='App'>
       <Header />
       <main>
+        <p>
+          Click on a card - the cards will shuffle. Win the game by clicking on
+          every card without clicking the same one twice!
+        </p>
         <Game />
       </main>
       <Footer />
