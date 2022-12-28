@@ -11,6 +11,20 @@ export const Cards = [
   { id: 10, content: "juice", clicked: false },
 ];
 
+// fetches multiple cards' info from API
+async function fetchData(amountToFetch) {
+  const dataArray = [];
+  for (let i = 0; i < amountToFetch; i++) {
+    const data = await fetchPokemon();
+    dataArray.push(data);
+  }
+  return dataArray;
+}
+
+fetchData(5)
+  .then((data) => console.log("resolved: ", data))
+  .catch((err) => console.log("rejected: ", err.message));
+
 // fetches random pokemon name and image
 async function fetchPokemon() {
   const res = await fetch(
