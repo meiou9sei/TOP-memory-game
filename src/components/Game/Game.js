@@ -1,3 +1,4 @@
+import Scoreboard from "./Scoreboard";
 import useGameLogic from "./useGameLogic";
 
 export default function Game() {
@@ -5,7 +6,10 @@ export default function Game() {
     useGameLogic();
 
   return (
-    <div>
+    <div className='game'>
+      <div className='scoreboard'>
+        <Scoreboard />
+      </div>
       <div className='card-display'>
         {(gameStatus === "active" &&
           randomize(cardsArray).map((card) => (
