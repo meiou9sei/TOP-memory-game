@@ -27,6 +27,7 @@ export default function Game() {
             >
               <span>
                 <img src={card.image} alt={card.name} />
+                <p>{card.name}</p>
               </span>
             </div>
           ))) || <div>You {gameStatus}!</div>}
