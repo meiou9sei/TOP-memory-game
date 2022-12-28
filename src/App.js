@@ -1,13 +1,13 @@
-import Footer from "./components/Footer";
-import CardDisplay from "./components/Game/CardDisplay";
 import Header from "./components/Header";
+import Game from "./components/Game/Game";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <div className='App'>
       <Header />
       <main>
-        <CardDisplay />
+        <Game />
       </main>
       <Footer />
     </div>

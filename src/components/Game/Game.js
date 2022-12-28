@@ -6,6 +6,12 @@ export default function CardDisplay() {
   const [cardsClicked, setCardsClicked] = useState(0);
   const [gameStatus, setGameStatus] = useState("active");
 
+  function newGame() {
+    setCardsArray(Cards);
+    setCardsClicked(0);
+    setGameStatus("active");
+  }
+
   function shuffleCards(cardId) {
     // check if card was clicked before or not
     const cardToCheck = cardsArray.find((card) => card.id === cardId);
@@ -47,17 +53,20 @@ export default function CardDisplay() {
   }
 
   return (
-    <div className='card-display'>
-      {(gameStatus === "active" &&
-        randomize(cardsArray).map((card) => (
-          <div
-            key={card.id}
-            className='card'
-            onClick={() => shuffleCards(card.id)}
-          >
-            <span>{card.content}</span>
-          </div>
-        ))) || <div>You {gameStatus}!</div>}
+    <div>
+      <div className='card-display'>
+        {(gameStatus === "active" &&
+          randomize(cardsArray).map((card) => (
+            <div
+              key={card.id}
+              className='card'
+              onClick={() => shuffleCards(card.id)}
+            >
+              <span>{card.content}</span>
+            </div>
+          ))) || <div>You {gameStatus}!</div>}
+      </div>
+      <button onClick={() => newGame()}>New Game</button>
     </div>
   );
 }
