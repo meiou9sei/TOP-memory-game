@@ -6,6 +6,7 @@ export default function Game() {
     cardsArray,
     cardsClicked,
     gameStatus,
+    bestScore,
     randomize,
     shuffleCards,
     newGame,
@@ -14,7 +15,7 @@ export default function Game() {
   return (
     <div className='game'>
       <div className='scoreboard'>
-        <Scoreboard score={cardsClicked} />
+        <Scoreboard score={cardsClicked} bestScore={bestScore} />
       </div>
       <div className='card-display'>
         {(gameStatus === "active" &&
