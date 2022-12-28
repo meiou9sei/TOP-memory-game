@@ -1,11 +1,22 @@
+import Scoreboard from "./Scoreboard";
 import useGameLogic from "./useGameLogic";
 
 export default function Game() {
-  const { cardsArray, gameStatus, randomize, shuffleCards, newGame } =
-    useGameLogic();
+  const {
+    cardsArray,
+    cardsClicked,
+    gameStatus,
+    bestScore,
+    randomize,
+    shuffleCards,
+    newGame,
+  } = useGameLogic();
 
   return (
-    <div>
+    <div className='game'>
+      <div className='scoreboard'>
+        <Scoreboard score={cardsClicked} bestScore={bestScore} />
+      </div>
       <div className='card-display'>
         {(gameStatus === "active" &&
           randomize(cardsArray).map((card) => (

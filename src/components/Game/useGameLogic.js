@@ -5,6 +5,9 @@ const useGameLogic = () => {
   const [cardsArray, setCardsArray] = useState(Cards);
   const [cardsClicked, setCardsClicked] = useState(0);
   const [gameStatus, setGameStatus] = useState("active");
+  const [bestScore, setBestScore] = useState(
+    localStorage.getItem("bestScore") || 0
+  );
 
   const newGame = () => {
     setCardsArray(Cards);
@@ -30,12 +33,25 @@ const useGameLogic = () => {
     }
   };
 
-  // check if won game
   useEffect(() => {
+    // update bestScore
+    if (cardsClicked > bestScore) {
+      setBestScore(cardsClicked);
+    }
+
+    // check if won game
     if (cardsClicked === cardsArray.length) {
       gameEnd("win");
     }
   }, [cardsClicked]);
+
+  // saves bestScore to localStorage
+  useEffect(
+    function updateLocalStorageBestScore() {
+      localStorage.setItem("bestScore", bestScore);
+    },
+    [bestScore]
+  );
 
   const randomize = (array) => {
     return array
@@ -54,7 +70,9 @@ const useGameLogic = () => {
 
   return {
     cardsArray,
+    cardsClicked,
     gameStatus,
+    bestScore,
     randomize,
     shuffleCards,
     newGame,
