@@ -25,7 +25,10 @@ export default function Game() {
               className='card'
               onClick={() => shuffleCards(card.id)}
             >
-              <span>{card.content}</span>
+              <span>
+                <img src={card.image} alt={card.name} />
+                <p>{card.name}</p>
+              </span>
             </div>
           ))) || <div>You {gameStatus}!</div>}
       </div>

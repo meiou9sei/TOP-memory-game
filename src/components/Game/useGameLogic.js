@@ -1,16 +1,47 @@
-import { Cards } from "./Cards";
+import { fetchPokemon } from "./Cards";
 import { useState, useEffect } from "react";
 
+const MAXPOKEMON = 905;
+
 const useGameLogic = () => {
-  const [cardsArray, setCardsArray] = useState(Cards);
   const [cardsClicked, setCardsClicked] = useState(0);
   const [gameStatus, setGameStatus] = useState("active");
   const [bestScore, setBestScore] = useState(
     localStorage.getItem("bestScore") || 0
   );
+  const [cardsArray, setCardsArray] = useState([]);
+  useEffect(function fetchCards() {
+    fetchData(5);
+  }, []);
+  const [isCardsLoaded, setIsCardsLoaded] = useState(false);
+
+  // fetches multiple cards' info from API
+  async function fetchData(amountToFetch) {
+    const dataArray = [];
+    const usedPokemon = [];
+    for (let i = 0; i < amountToFetch; i++) {
+      let pokemonId = getRandomIntInclusive(1, MAXPOKEMON);
+      // prevents duplicates
+      while (usedPokemon.includes(pokemonId)) {
+        pokemonId = getRandomIntInclusive(1, MAXPOKEMON);
+      }
+      usedPokemon.push(pokemonId);
+      const data = await fetchPokemon(pokemonId);
+      dataArray.push(data);
+    }
+    setCardsArray(dataArray);
+    setIsCardsLoaded(true);
+  }
+
+  function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+  }
 
   const newGame = () => {
-    setCardsArray(Cards);
+    setIsCardsLoaded(false);
+    fetchData(5);
     setCardsClicked(0);
     setGameStatus("active");
   };
@@ -40,7 +71,7 @@ const useGameLogic = () => {
     }
 
     // check if won game
-    if (cardsClicked === cardsArray.length) {
+    if (isCardsLoaded && cardsClicked === cardsArray.length) {
       gameEnd("win");
     }
   }, [cardsClicked]);
