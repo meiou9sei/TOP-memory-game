@@ -21,9 +21,9 @@ async function fetchData(amountToFetch) {
   return dataArray;
 }
 
-fetchData(5)
-  .then((data) => console.log("resolved: ", data))
-  .catch((err) => console.log("rejected: ", err.message));
+// fetchData(5)
+//   .then((data) => console.log("resolved: ", data))
+//   .catch((err) => console.log("rejected: ", err.message));
 
 // fetches random pokemon name and image
 async function fetchPokemon() {
@@ -33,9 +33,13 @@ async function fetchPokemon() {
   if (!res.ok) {
     throw new Error("cannot fetch data");
   }
-
   const data = await res.json();
-  return data;
+  console.log(data.name);
+  const dataObj = {
+    name: data.name,
+    image: data.sprites.other["official-artwork"].front_default,
+  };
+  return dataObj;
 }
 
 fetchPokemon()
