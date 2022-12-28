@@ -1,16 +1,32 @@
-import { Cards } from "./Cards";
+import { Cards, fetchPokemon } from "./Cards";
 import { useState, useEffect } from "react";
 
 const useGameLogic = () => {
-  const [cardsArray, setCardsArray] = useState(Cards);
   const [cardsClicked, setCardsClicked] = useState(0);
   const [gameStatus, setGameStatus] = useState("active");
   const [bestScore, setBestScore] = useState(
     localStorage.getItem("bestScore") || 0
   );
+  const [cardsArray, setCardsArray] = useState([]);
+  useEffect(function fetchCards() {
+    fetchData(5);
+  }, []);
+  const [isCardsLoaded, setIsCardsLoaded] = useState(false);
+
+  // fetches multiple cards' info from API
+  async function fetchData(amountToFetch) {
+    const dataArray = [];
+    for (let i = 0; i < amountToFetch; i++) {
+      const data = await fetchPokemon();
+      dataArray.push(data);
+    }
+    setCardsArray(dataArray);
+    setIsCardsLoaded(true);
+  }
 
   const newGame = () => {
-    setCardsArray(Cards);
+    setIsCardsLoaded(false);
+    fetchData(5);
     setCardsClicked(0);
     setGameStatus("active");
   };
@@ -40,7 +56,7 @@ const useGameLogic = () => {
     }
 
     // check if won game
-    if (cardsClicked === cardsArray.length) {
+    if (isCardsLoaded && cardsClicked === cardsArray.length) {
       gameEnd("win");
     }
   }, [cardsClicked]);

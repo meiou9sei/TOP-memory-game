@@ -1,3 +1,4 @@
+// temp cards to replace w/ pokeapi later
 export const Cards = [
   { id: 1, content: "apple", clicked: false },
   { id: 2, content: "banana", clicked: false },
@@ -11,39 +12,21 @@ export const Cards = [
   { id: 10, content: "juice", clicked: false },
 ];
 
-// fetches multiple cards' info from API
-async function fetchData(amountToFetch) {
-  const dataArray = [];
-  for (let i = 0; i < amountToFetch; i++) {
-    const data = await fetchPokemon();
-    dataArray.push(data);
-  }
-  return dataArray;
-}
-
-fetchData(5)
-  .then((data) => console.log("resolved: ", data))
-  .catch((err) => console.log("rejected: ", err.message));
-
 // fetches random pokemon name and image
-async function fetchPokemon() {
-  const res = await fetch(
-    `https://pokeapi.co/api/v2/pokemon/${getRandomIntInclusive(1, 905)}`
-  );
+export async function fetchPokemon() {
+  const pokemonId = getRandomIntInclusive(1, 905);
+  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
   if (!res.ok) {
     throw new Error("cannot fetch data");
   }
   const data = await res.json();
   const dataObj = {
+    id: pokemonId,
     name: data.name,
     image: data.sprites.other["official-artwork"].front_default,
   };
   return dataObj;
 }
-
-// fetchPokemon()
-//   .then((data) => console.log("resolved: ", data))
-//   .catch((err) => console.log("rejected: ", err.message));
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
