@@ -1,5 +1,7 @@
-import { Cards, fetchPokemon } from "./Cards";
+import { fetchPokemon } from "./Cards";
 import { useState, useEffect } from "react";
+
+const MAXPOKEMON = 905;
 
 const useGameLogic = () => {
   const [cardsClicked, setCardsClicked] = useState(0);
@@ -16,12 +18,24 @@ const useGameLogic = () => {
   // fetches multiple cards' info from API
   async function fetchData(amountToFetch) {
     const dataArray = [];
+    const usedPokemon = [];
     for (let i = 0; i < amountToFetch; i++) {
-      const data = await fetchPokemon();
+      let pokemonId = getRandomIntInclusive(1, MAXPOKEMON);
+      while (usedPokemon.includes(pokemonId)) {
+        pokemonId = getRandomIntInclusive(1, MAXPOKEMON);
+      }
+      usedPokemon.push(pokemonId);
+      const data = await fetchPokemon(pokemonId);
       dataArray.push(data);
     }
     setCardsArray(dataArray);
     setIsCardsLoaded(true);
+  }
+
+  function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
   }
 
   const newGame = () => {
