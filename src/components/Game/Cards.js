@@ -10,3 +10,26 @@ export const Cards = [
   { id: 9, content: "indian curry", clicked: false },
   { id: 10, content: "juice", clicked: false },
 ];
+
+// fetches random pokemon name and image
+async function fetchPokemon() {
+  const res = await fetch(
+    `https://pokeapi.co/api/v2/pokemon/${getRandomIntInclusive(1, 905)}`
+  );
+  if (!res.ok) {
+    throw new Error("cannot fetch data");
+  }
+
+  const data = await res.json();
+  return data;
+}
+
+fetchPokemon()
+  .then((data) => console.log("resolved: ", data))
+  .catch((err) => console.log("rejected: ", err.message));
+
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+}
