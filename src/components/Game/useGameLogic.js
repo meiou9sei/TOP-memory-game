@@ -21,6 +21,7 @@ const useGameLogic = () => {
     const usedPokemon = [];
     for (let i = 0; i < amountToFetch; i++) {
       let pokemonId = getRandomIntInclusive(1, MAXPOKEMON);
+      // prevents duplicates
       while (usedPokemon.includes(pokemonId)) {
         pokemonId = getRandomIntInclusive(1, MAXPOKEMON);
       }
